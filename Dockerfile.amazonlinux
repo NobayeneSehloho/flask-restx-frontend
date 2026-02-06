@@ -1,0 +1,70 @@
+FROM amazonlinux:2023
+
+WORKDIR /app
+
+ENV OPENSSL_VERSION=3.6.1
+
+# Install dependencies
+RUN dnf update -y && \
+    dnf install -y --allowerasing \
+        curl \
+        tar \
+        gzip \
+        make \
+        gcc \
+        gcc-c++ \
+        perl \
+        zlib-devel \
+        ca-certificates \
+        findutils && \
+    dnf clean all
+
+# Install Node.js and update npm
+RUN curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && \
+    dnf install -y nodejs && \
+    npm install -g npm@latest && \
+    dnf clean all
+
+# Download, compile with RPATH, and install OpenSSL
+RUN cd /usr/local/src && \
+    curl -L -o openssl-${OPENSSL_VERSION}.tar.gz \
+        https://github.com/openssl/openssl/releases/download/openssl-${OPENSSL_VERSION}/openssl-${OPENSSL_VERSION}.tar.gz && \
+    tar -xzf openssl-${OPENSSL_VERSION}.tar.gz && \
+    cd openssl-${OPENSSL_VERSION} && \
+    ./config \
+        --prefix=/usr/local/ssl \
+        --openssldir=/usr/local/ssl \
+        --libdir=lib64 \
+        shared \
+        zlib \
+        -Wl,-rpath,/usr/local/ssl/lib64 && \
+    make -j$(nproc) && \
+    make install && \
+    ln -sf /usr/local/ssl/bin/openssl /usr/bin/openssl && \
+    cd / && \
+    rm -rf /usr/local/src/openssl* && \
+    /usr/local/ssl/bin/openssl version
+
+# Set environment variables
+ENV LD_LIBRARY_PATH=/usr/local/ssl/lib64
+ENV PATH=/usr/local/ssl/bin:$PATH
+
+# Cleanup
+RUN dnf remove -y make gcc gcc-c++ && \
+    dnf autoremove -y && \
+    dnf clean all
+
+# Verify
+RUN openssl version
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:3000/ || exit 1
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
