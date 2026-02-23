@@ -31,18 +31,25 @@ npm run dev
 
 The app will be available at http://localhost:3000
 
+## Build for Production
+
+```bash
+npm run build
+npm run preview
+```
+
 ## Docker
 
 ### Build Image
 
 ```bash
-docker build -t flask-restx-frontend:v1.0.0 .
+docker build -t flask-restx-frontend:v1.0.1-al-prod-01x .
 ```
 
 ### Run Container
 
 ```bash
-docker run -d -p 3000:3000 flask-restx-frontend:v1.0.0
+docker run -d -p 80:80 flask-restx-frontend:v1.0.1-al-prod-01x
 ```
 
 ### With Docker Network
@@ -51,15 +58,8 @@ docker run -d -p 3000:3000 flask-restx-frontend:v1.0.0
 docker network create flask-restx-network
 docker run -d --name flask-restx-frontend \
   --network flask-restx-network \
-  -p 3000:3000 \
-  flask-restx-frontend:v1.0.0
-```
-
-## Build for Production
-
-```bash
-npm run build
-npm run preview
+  -p 80:80 \
+  flask-restx-frontend:v1.0.1-al-prod-01x
 ```
 
 ## API Configuration

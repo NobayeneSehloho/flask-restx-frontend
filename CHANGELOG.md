@@ -14,6 +14,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [1.0.1-al-prod-01x] - 2026-02-10
+
+### Added
+- Production-optimized Docker image with Nginx 1.29.5
+- Multi-stage build process for minimal production image
+- Custom `nginx.conf` for SPA routing support
+- Nginx modules: NJS 0.9.5, ACME 0.3.1, GeoIP, Image Filter, XSLT
+- Docker entrypoint scripts for dynamic configuration
+- IPv6 support configuration
+- Environment variable substitution in Nginx templates
+- Worker process auto-tuning based on CPU cores
+
+### Changed
+- **Architecture**: ARM64 → AMD64 for production compatibility
+- **Base image**: Amazon Linux 2023 → Alpine Linux (nginx:1.29.5-alpine)
+- **Image size**: 282 MB → 26 MB (90% reduction)
+- **Runtime**: Node.js development server → Nginx production server
+- **Port**: 3000 → 80 (standard HTTP)
+- **Working directory**: /app → /
+- **Health check**: curl → wget with spider mode
+- Serves pre-built static assets from `/usr/share/nginx/html`
+
+### Security
+- Minimal Alpine Linux base image (reduced attack surface)
+- No build tools or source code in production image
+- No Node.js runtime in production (static assets only)
+- Nginx 1.29.5 mainline with latest security patches
+- Image tag: `flask-restx-frontend:v1.0.1-al-prod-01x`
+
+### Performance
+- 90% smaller image size for faster deployments
+- Nginx optimized for serving static assets
+- Reduced memory footprint
+- Faster container startup time
+
+### Technical Details
+- Base: nginx:1.29.5-alpine
+- Architecture: AMD64
+- Nginx modules: NJS, ACME, GeoIP, Image Filter, XSLT
+- Entrypoint: /docker-entrypoint.sh
+- Command: nginx -g "daemon off;"
+
 ## [1.0.1-al] - 2026-02-05
 
 ### Added
@@ -77,6 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Impact**: Most CVEs require parsing malicious PKCS#12, CMS, or timestamp files which are not used by this application
   - **Resolution**: Use `Dockerfile.amazonlinux` (version 1.0.1-al) which includes custom OpenSSL 3.6.1 build
 
-[Unreleased]: https://github.com/yourusername/yourrepo/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/yourusername/yourrepo/compare/v1.0.1-al-prod-01x...HEAD
+[1.0.1-al-prod-01x]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.1-al-prod-01x
 [1.0.1-al]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.1-al
 [1.0.0]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.0
