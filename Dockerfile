@@ -1,3 +1,4 @@
+
 # Multi-stage build for production
 
 # Stage 1: Build
@@ -19,10 +20,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy entrypoint script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 80
 
