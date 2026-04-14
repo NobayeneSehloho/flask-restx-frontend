@@ -14,6 +14,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [1.0.2] - 2026-04-14
+
+### Security
+- **Fixed 27 CVEs** across all severity levels in Alpine base image packages
+- Trivy scan: 0 vulnerabilities (all severity levels)
+- npm audit: 0 vulnerabilities (fixed 4 npm dependency vulnerabilities via `npm audit fix`)
+- Multi-arch image build (linux/amd64, linux/arm64)
+
+#### OpenSSL (libcrypto3 / libssl3): 3.5.5-r0 → 3.5.6-r0
+- **CVE-2026-28390** (HIGH): Denial of Service due to NULL pointer dereference in CMS
+- **CVE-2026-28388** (MEDIUM): Denial of Service due to NULL pointer dereference in delta CRL
+- **CVE-2026-28389** (MEDIUM): Denial of Service vulnerability in CMS processing
+- **CVE-2026-31790** (MEDIUM): Information Disclosure from Uninitialized Memory via Invalid RSA Public Key
+- **CVE-2026-2673** (LOW): TLS 1.3 server may choose unexpected key agreement group
+- **CVE-2026-28387** (LOW): Arbitrary code execution due to use-after-free in DANE TLSA authentication
+- **CVE-2026-31789** (LOW): Denial of Service via excessively large OCTET STRING conversion
+
+#### libexpat: 2.7.4-r0 → 2.7.5-r0
+- **CVE-2026-32776** (MEDIUM): Denial of Service due to NULL pointer dereference
+- **CVE-2026-32777** (MEDIUM): Denial of Service via infinite loop in DTD content parsing
+- **CVE-2026-32778** (MEDIUM): Denial of Service via NULL pointer dereference after out-of-memory condition
+
+#### libpng: 1.6.55-r0 → 1.6.57-r0
+- **CVE-2026-33416** (HIGH): Arbitrary code execution due to use-after-free vulnerability
+- **CVE-2026-33636** (HIGH): Information disclosure and denial of service via out-of-bounds read/write
+- **CVE-2026-34757** (MEDIUM): Information disclosure and data corruption via use-after-free vulnerability
+
+#### libuuid (util-linux): 2.41.2-r0 → 2.41.4-r0
+- **CVE-2026-27456** (MEDIUM): TOCTOU in the mount program when setting up loop devices
+
+#### musl / musl-utils: 1.2.5-r21 → 1.2.5-r23
+- **CVE-2026-40200** (UNKNOWN): Stack-based buffer overflow in musl libc
+- **CVE-2026-6042** (UNKNOWN): Security flaw in musl libc up to 1.2.6
+
+#### zlib: 1.3.1-r2 → 1.3.2-r0
+- **CVE-2026-22184** (HIGH): Arbitrary code execution via buffer overflow in untgz utility
+- **CVE-2026-27171** (MEDIUM): Denial of Service via infinite loop in CRC32 combine functions
+
+### Technical Details
+- Base: nginx:alpine (Alpine 3.23.3)
+- Architectures: linux/amd64, linux/arm64
+- Image tag: `flask-restx-frontend:v1.0.2`
+- Built with `docker buildx --no-cache` to ensure fresh package pulls
+
+## [1.0.1] - 2026-03-05
+
+### Security
+- **Fixed libpng CVE-2026-25646** (HIGH): Heap buffer overflow in png_set_quantize
+  - Updated libpng from 1.6.54-r0 to 1.6.55-r0
+- **Fixed axios vulnerability** (HIGH): Denial of Service via __proto__ key in mergeConfig
+  - Updated axios to patched version
+- **Fixed rollup vulnerability** (HIGH): Arbitrary File Write via Path Traversal
+  - Updated rollup to patched version
+- Added automatic package upgrade step in Dockerfile (`apk upgrade`)
+- Trivy scan: 0 vulnerabilities (all severity levels)
+- npm audit: 0 vulnerabilities
+
+### Changed
+- Updated Dockerfile to use `nginx:alpine` (latest) instead of pinned version
+- Added `RUN apk update && apk upgrade --no-cache` to ensure latest security patches
+- Updated npm dependencies via `npm audit fix`
+
+### Technical Details
+- Base: nginx:alpine (Alpine 3.23.3)
+- libpng: 1.6.55-r0
+- Image tag: `flask-restx-frontend:v1.0.1`
+- ECR URI: `REDACTED.dkr.ecr.us-east-1.amazonaws.com/flask-restx-frontend:v1.0.1`
+
 ## [1.0.1-al-prod-01x] - 2026-02-10
 
 ### Added
@@ -119,7 +187,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Impact**: Most CVEs require parsing malicious PKCS#12, CMS, or timestamp files which are not used by this application
   - **Resolution**: Use `Dockerfile.amazonlinux` (version 1.0.1-al) which includes custom OpenSSL 3.6.1 build
 
-[Unreleased]: https://github.com/yourusername/yourrepo/compare/v1.0.1-al-prod-01x...HEAD
+[Unreleased]: https://github.com/yourusername/yourrepo/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/yourusername/yourrepo/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.1
 [1.0.1-al-prod-01x]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.1-al-prod-01x
 [1.0.1-al]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.1-al
 [1.0.0]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.0
