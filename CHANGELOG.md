@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [1.0.3] - 2026-05-01
+
+### Fixed
+- **Frontend unable to call backend in ECS** — `.env.local` (containing `http://localhost:5000/api`) was not excluded from Docker builds, causing the localhost URL to be baked into the production JS bundle
+- Added `.env.local` to `.dockerignore` so production builds use the correct relative `/api` base URL
+- Configured ECS Service Connect for service-to-service communication, enabling nginx to resolve `flask-restx-backend:5000`
+
 ## [1.0.2] - 2026-04-14
 
 ### Security
@@ -80,7 +87,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Base: nginx:alpine (Alpine 3.23.3)
 - libpng: 1.6.55-r0
 - Image tag: `flask-restx-frontend:v1.0.1`
-- ECR URI: `REDACTED.dkr.ecr.us-east-1.amazonaws.com/flask-restx-frontend:v1.0.1`
 
 ## [1.0.1-al-prod-01x] - 2026-02-10
 
