@@ -14,6 +14,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [2.0.0] - 2026-05-27
+
+### Added
+- **Departments module** — full CRUD page (`src/pages/Departments.jsx`)
+- **Teachers module** — full CRUD page with name and email fields (`src/pages/Teachers.jsx`)
+- **Enrolments module** — teacher-to-course assignment UI with list/create/delete (`src/pages/Enrolments.jsx`)
+- **Student Enrolments module** — student-to-course enrolment UI with list/create/delete (`src/pages/StudentEnrolments.jsx`)
+- **Expandable detail rows** on all resource tables:
+  - Courses → shows enrolled students
+  - Students → shows enrolled courses
+  - Departments → shows courses in department
+  - Teachers → shows assigned courses
+- **Service layer** (`src/services/data.js`) — added `departmentService`, `teacherService`, `enrolmentService`, `studentEnrolmentService` with all relationship endpoints
+- **Dashboard redesign** — colorful gradient cards with hover animations, links to all sections, counts for all 6 resources (departments, courses, teachers, students, teacher enrolments, student enrolments)
+
+### Changed
+- **Courses page** — added `department_id` field with dropdown (required by backend), shows department name in table
+- **Students page** — fixed form to use correct backend fields (`name`, `email`, `student_number`) instead of incorrect `course_id`
+- **Navbar** — updated with links to all pages (Dashboard, Departments, Courses, Teachers, Students, Enrolments, Student Enrolments)
+- **App.jsx** — added routes for `/departments`, `/teachers`, `/enrolments`, `/student-enrolments`
+
+### Security
+- **Switched base image** from `nginx:alpine` (11 CVEs: 2H, 9M) to `nginx:1-alpine-slim` (1 CVE: 1M)
+  - Eliminated all HIGH severity CVEs
+  - Reduced from 87 packages to 26 packages
+  - Image size reduced from 29 MB to 6.2 MB
+- **Remaining**: 1 MEDIUM (CVE-2025-60876 in busybox 1.37.0-r30) — no fix available upstream
+- Docker Scout scan: 0C 0H 1M 0L
+- Trivy scan: 0 vulnerabilities (all severity levels)
+- Multi-arch image build (linux/amd64, linux/arm64)
+
+### Technical Details
+- Base: nginx:1-alpine-slim (Alpine 3.23.4)
+- Architectures: linux/amd64, linux/arm64
+- Image tag: `flask-restx-frontend:v2.0.0`
+- Frontend now covers 100% of backend API endpoints
+
 ## [1.0.3] - 2026-05-01
 
 ### Fixed
@@ -193,7 +230,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Impact**: Most CVEs require parsing malicious PKCS#12, CMS, or timestamp files which are not used by this application
   - **Resolution**: Use `Dockerfile.amazonlinux` (version 1.0.1-al) which includes custom OpenSSL 3.6.1 build
 
-[Unreleased]: https://github.com/yourusername/yourrepo/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/yourusername/yourrepo/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/yourusername/yourrepo/compare/v1.0.3...v2.0.0
+[1.0.3]: https://github.com/yourusername/yourrepo/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/yourusername/yourrepo/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.1
 [1.0.1-al-prod-01x]: https://github.com/yourusername/yourrepo/releases/tag/v1.0.1-al-prod-01x

@@ -13,10 +13,12 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Production
-FROM nginx:alpine
+# FROM nginx:alpine
+# RUN apk update && apk upgrade --no-cache
+# Note: nginx:alpine carries 11 CVEs (2H, 9M) due to curl, freetype, libxml2, busybox
 
-# Update packages to get latest security patches
-RUN apk update && apk upgrade --no-cache
+# Slim variant: removes 10 CVEs, only 1M remains (busybox - no fix available upstream)
+FROM nginx:1-alpine-slim
 
 # Copy built files
 COPY --from=builder /app/dist /usr/share/nginx/html

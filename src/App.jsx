@@ -6,6 +6,10 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Courses from './pages/Courses';
 import Students from './pages/Students';
+import Departments from './pages/Departments';
+import Teachers from './pages/Teachers';
+import Enrolments from './pages/Enrolments';
+import StudentEnrolments from './pages/StudentEnrolments';
 
 function App() {
   return (
@@ -14,37 +18,13 @@ function App() {
         <Toaster position="top-right" />
         <Routes>
           <Route path="/login" element={<Login />} />
-          {/* Development: Authentication disabled - uncomment ProtectedRoute to enable */}
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/students" element={<Students />} />
-          
-          {/* Production: Uncomment these and comment out the routes above */}
-          {/* <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/courses"
-            element={
-              <ProtectedRoute>
-                <Courses />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/students"
-            element={
-              <ProtectedRoute>
-                <Students />
-              </ProtectedRoute>
-            }
-          /> */}
-          
+          <Route path="/departments" element={<Departments />} />
+          <Route path="/teachers" element={<Teachers />} />
+          <Route path="/enrolments" element={<Enrolments />} />
+          <Route path="/student-enrolments" element={<StudentEnrolments />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>

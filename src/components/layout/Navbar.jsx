@@ -10,6 +10,8 @@ export default function Navbar() {
     navigate('/login');
   };
 
+  const linkClass = "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium";
+
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,39 +21,13 @@ export default function Navbar() {
               <span className="text-xl font-bold text-blue-600">Course Management</span>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link
-                to="/dashboard"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Dashboard
-              </Link>
-              <Link
-                to="/courses"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Courses
-              </Link>
-              <Link
-                to="/students"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Students
-              </Link>
-
-              <Link
-                to="/students"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Teachers
-              </Link>
-
-              <Link
-                to="/students"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Enrolment
-              </Link>
-
+              <Link to="/dashboard" className={linkClass}>Dashboard</Link>
+              <Link to="/departments" className={linkClass}>Departments</Link>
+              <Link to="/courses" className={linkClass}>Courses</Link>
+              <Link to="/teachers" className={linkClass}>Teachers</Link>
+              <Link to="/students" className={linkClass}>Students</Link>
+              <Link to="/enrolments" className={linkClass}>Enrolments</Link>
+              <Link to="/student-enrolments" className={linkClass}>Student Enrolments</Link>
             </div>
           </div>
           <div className="flex items-center">
