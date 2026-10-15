@@ -14,6 +14,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [2.0.1] - 2026-10-15
+
+### Security
+- **Patched 59 CVEs** (8 HIGH, 18 MEDIUM, 33 LOW) across all severity levels in Alpine base image packages
+- Added `RUN apk update && apk upgrade --no-cache` to the `nginx:1-alpine-slim` production stage
+- Affected packages upgraded:
+  - **OpenSSL** (libcrypto3 / libssl3): 3.5.6-r0 → 3.5.8-r0 — resolves `CVE-2026-14456`, `CVE-2026-45447` (HIGH) and 7 MEDIUM / 15 LOW
+  - **pcre2**: 10.47-r0 → 10.49-r0 — resolves `CVE-2026-103111`, `CVE-2026-86145`, `CVE-2026-89157`, `CVE-2026-89161` (HIGH) and 4 MEDIUM / 1 LOW
+  - **zlib**: 1.3.2-r0 → 1.3.2-r1 — resolves `CVE-2026-85091` (MEDIUM)
+- Base image rolled from Alpine 3.23.4 to Alpine 3.24.2 via `apk upgrade`
+- Trivy scan: 0 vulnerabilities (all severity levels) on both `linux/amd64` and `linux/arm64`
+- Multi-arch image build (linux/amd64, linux/arm64)
+
+### Technical Details
+- Base: nginx:1-alpine-slim (Alpine 3.24.2)
+- Architectures: linux/amd64, linux/arm64
+- Image tag: `flask-restx-frontend:v2.0.1`
+- ECR: `REDACTED.dkr.ecr.us-east-1.amazonaws.com/flask-restx-frontend:v2.0.1`
+- Note: `v2.0.0` remains published (unpatched) in the IMMUTABLE ECR repo; this fix ships as `v2.0.1`
+
 ## [2.0.0] - 2026-05-27
 
 ### Added
