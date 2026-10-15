@@ -31,7 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Base: nginx:1-alpine-slim (Alpine 3.24.2)
 - Architectures: linux/amd64, linux/arm64
 - Image tag: `flask-restx-frontend:v2.0.1`
-- ECR: `REDACTED.dkr.ecr.us-east-1.amazonaws.com/flask-restx-frontend:v2.0.1`
 - Note: `v2.0.0` remains published (unpatched) in the IMMUTABLE ECR repo; this fix ships as `v2.0.1`
 
 ## [2.0.0] - 2026-05-27
