@@ -14,6 +14,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [2.1.0] - 2026-10-16
+
+### Fixed
+- **Login now works end to end.** The login request targeted the `/api`-prefixed
+  base URL, which resolved to a path the backend does not serve, so
+  authentication always failed. The login call now targets the backend's login
+  route directly (outside the `/api` base), while all other API calls continue
+  to use the `/api` base.
+
+### Added
+- **nginx:** added an `/auth` proxy block (`nginx.conf`) so the production
+  container forwards login requests to the backend, mirroring the existing
+  `/api` proxy.
+- **Vite dev server:** added an `/auth` proxy entry (`vite.config.js`) so local
+  development (`npm run dev`) forwards login requests to the backend, matching
+  the container's behaviour.
+
+### Notes
+- Aligns with the backend `v2.1.0` change that enforces JWT authentication on
+  all `/api` endpoints; the stored token is sent as a `Bearer` header on every
+  API request, and a `401` response clears the session and redirects to login.
+- No change to the `Dockerfile`; the updated `nginx.conf` is picked up on the
+  next image build via the existing copy step.
+
 ## [2.0.1] - 2026-10-15
 
 ### Security
@@ -249,7 +273,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Impact**: Most CVEs require parsing malicious PKCS#12, CMS, or timestamp files which are not used by this application
   - **Resolution**: Use `Dockerfile.amazonlinux` (version 1.0.1-al) which includes custom OpenSSL 3.6.1 build
 
-[Unreleased]: https://github.com/yourusername/yourrepo/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/yourusername/yourrepo/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/yourusername/yourrepo/compare/v2.0.1...v2.1.0
+[2.0.1]: https://github.com/yourusername/yourrepo/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/yourusername/yourrepo/compare/v1.0.3...v2.0.0
 [1.0.3]: https://github.com/yourusername/yourrepo/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/yourusername/yourrepo/compare/v1.0.1...v1.0.2

@@ -9,6 +9,10 @@ export default defineConfig({
       '/api': {
         target: process.env.VITE_API_URL || 'http://flask-restx-backend:5000',
         changeOrigin: true
+      },
+      '/auth': {
+        target: process.env.VITE_API_URL || 'http://flask-restx-backend:5000',
+        changeOrigin: true
       }
     }
   }
